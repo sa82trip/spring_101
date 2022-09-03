@@ -1,10 +1,11 @@
+import springbook.user.dao.GUserDao;
 import springbook.user.dao.UserDao;
 import springbook.user.domain.User;
 
 import java.sql.SQLException;
 
 public class Main {
-    public static void main(String[] args) throws ClassNotFoundException, SQLException { UserDao dao = new UserDao();
+    public static void main(String[] args) throws ClassNotFoundException, SQLException { UserDao dao = new GUserDao();
         User user = new User(); user.setId("ordinaryD"); user.setName("J"); user.setPassword("password");
         dao.add(user);
         System.out.println(user.getId() + " 등록 성공");
