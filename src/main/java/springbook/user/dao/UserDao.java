@@ -5,14 +5,18 @@ import springbook.user.domain.User;
 import java.sql.*;
 
 public  class UserDao {
-    private final SimpleConnectionMaker simpleConnectionMaker;
+    private final ConnectionMaker connectionMaker;
 
     public UserDao() {
-        simpleConnectionMaker = new SimpleConnectionMaker();
+        /*
+        this part should be fixed
+        because UserDao still need to choose which implementation it should use.
+        **/
+        connectionMaker = new DConnectionMaker();
     }
 
     public void add(User user) throws ClassNotFoundException, SQLException {
-        Connection c = simpleConnectionMaker.makeConnection();
+        Connection c = connectionMaker.makeConnection();
         PreparedStatement ps = c.prepareStatement(
                 "insert into users(id, name, password) values(?,?,?)");
         ps.setString(1, user.getId());
@@ -24,7 +28,7 @@ public  class UserDao {
     }
 
     public User get(String id) throws ClassNotFoundException, SQLException {
-        Connection c = simpleConnectionMaker.makeConnection();
+        Connection c = connectionMaker.makeConnection();
         PreparedStatement ps = c.prepareStatement("select * from users where id = ?");
         ps.setString(1, id);
         ResultSet rs = ps.executeQuery();
@@ -39,7 +43,7 @@ public  class UserDao {
         return user;
     }
     public void deleteAll() throws SQLException, ClassNotFoundException {
-        Connection c = simpleConnectionMaker.makeConnection();
+        Connection c = connectionMaker.makeConnection();
         PreparedStatement ps = c.prepareStatement("truncate users");
         ps.execute();
         ps.close();
