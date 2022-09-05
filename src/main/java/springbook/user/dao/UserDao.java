@@ -7,12 +7,12 @@ import java.sql.*;
 public  class UserDao {
     private final ConnectionMaker connectionMaker;
 
-    public UserDao() {
+    public UserDao(ConnectionMaker connectionMaker) {
         /*
         this part should be fixed
         because UserDao still need to choose which implementation it should use.
         **/
-        connectionMaker = new DConnectionMaker();
+        this.connectionMaker = connectionMaker;
     }
 
     public void add(User user) throws ClassNotFoundException, SQLException {
