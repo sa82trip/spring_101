@@ -10,6 +10,6 @@
 1. Sto0001
    1. changes on everything except java file
 2. Sto0002
-   1. commits related to refactoring
+   1. commits related to refactoring (only within files)
 3. Sto0003
-   1. commits related to newly introduced part
+   1. commits related to refactoring (re-organizing by separating etc...)
