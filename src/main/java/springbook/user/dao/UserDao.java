@@ -6,13 +6,17 @@ import java.sql.*;
 
 public  class UserDao {
     private final ConnectionMaker connectionMaker;
+    private static UserDao INSTANCE;
 
-    public UserDao(ConnectionMaker connectionMaker) {
-        /*
-        this part should be fixed
-        because UserDao still need to choose which implementation it should use.
-        **/
+    private UserDao(ConnectionMaker connectionMaker) {
         this.connectionMaker = connectionMaker;
+    }
+
+    public static synchronized UserDao getInstance(){
+        // I can't inject ConnectionMaker in this way.
+        // So I should not avoid using this patter (singleton patter)
+       if(INSTANCE ==null) INSTANCE = new UserDao(???);
+       return INSTANCE;
     }
 
     public void add(User user) throws ClassNotFoundException, SQLException {
