@@ -13,3 +13,5 @@
    1. commits related to refactoring (only within files)
 3. Sto0003
    1. commits related to refactoring (re-organizing by separating etc...)
+4. Sto0005
+   1. examples of bad practices
