@@ -6,17 +6,13 @@ import java.sql.*;
 
 public  class UserDao {
     private final ConnectionMaker connectionMaker;
-    private static UserDao INSTANCE;
+
+    // c and user can be changed anytime and this will lead serious problems
+    private Connection c;
+    private User user;
 
     private UserDao(ConnectionMaker connectionMaker) {
         this.connectionMaker = connectionMaker;
-    }
-
-    public static synchronized UserDao getInstance(){
-        // I can't inject ConnectionMaker in this way.
-        // So I should not avoid using this patter (singleton patter)
-       if(INSTANCE ==null) INSTANCE = new UserDao(???);
-       return INSTANCE;
     }
 
     public void add(User user) throws ClassNotFoundException, SQLException {
@@ -37,14 +33,13 @@ public  class UserDao {
         ps.setString(1, id);
         ResultSet rs = ps.executeQuery();
         rs.next();
-        User user = new User();
-        user.setId(rs.getString("id"));
-        user.setName(rs.getString("name"));
-        user.setPassword(rs.getString("password"));
+        this.user.setId(rs.getString("id"));
+        this.user.setName(rs.getString("name"));
+        this.user.setPassword(rs.getString("password"));
         rs.close();
         ps.close();
         c.close();
-        return user;
+        return this.user;
     }
     public void deleteAll() throws SQLException, ClassNotFoundException {
         Connection c = connectionMaker.makeConnection();
