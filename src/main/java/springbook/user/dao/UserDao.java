@@ -33,6 +33,7 @@ public  class UserDao {
         ps.setString(1, id);
         ResultSet rs = ps.executeQuery();
         rs.next();
+        this.user = new User();
         this.user.setId(rs.getString("id"));
         this.user.setName(rs.getString("name"));
         this.user.setPassword(rs.getString("password"));
