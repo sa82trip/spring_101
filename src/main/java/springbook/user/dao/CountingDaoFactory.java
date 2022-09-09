@@ -8,7 +8,9 @@ import org.springframework.context.annotation.Configuration;
 public class CountingDaoFactory {
     @Bean // 오브젝트 생성을 담당하는 IoC용 메소드라는 표시
     public UserDao userDao () {
-        return new UserDao(getConnectionMaker());
+        UserDao userDao = new UserDao();
+        userDao.setConnectionMaker(getConnectionMaker());
+        return userDao;
     }
 
     @Bean

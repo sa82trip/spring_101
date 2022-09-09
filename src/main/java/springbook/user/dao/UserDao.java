@@ -4,14 +4,12 @@ import springbook.user.domain.User;
 
 import java.sql.*;
 
-public  class UserDao {
-    private final ConnectionMaker connectionMaker;
+public class UserDao {
+    private ConnectionMaker connectionMaker;
 
-    // c and user can be changed anytime and this will lead serious problems
-    private Connection c;
     private User user;
 
-    public UserDao(ConnectionMaker connectionMaker) {
+    public void setConnectionMaker(ConnectionMaker connectionMaker) {
         this.connectionMaker = connectionMaker;
     }
 
@@ -42,6 +40,7 @@ public  class UserDao {
         c.close();
         return this.user;
     }
+
     public void deleteAll() throws SQLException, ClassNotFoundException {
         Connection c = connectionMaker.makeConnection();
         PreparedStatement ps = c.prepareStatement("truncate users");

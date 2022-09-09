@@ -21,6 +21,6 @@ public class CountingUserDaoTest {
        User user2 = dao.get(user.getId()); System.out.println(user2.getName()); System.out.println(user2.getPassword());
        System.out.println(user2.getId() + " 조회 성공");
        CountingConnectionMaker ccm = context.getBean("getConnectionMaker", CountingConnectionMaker.class);
-       System.out.println(ccm.getCounter());
+       System.out.printf("UserDao was used %d times%n",ccm.getCounter());
    }
 }
