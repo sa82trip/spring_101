@@ -9,14 +9,18 @@ import java.sql.SQLException;
 
 
 public class UserDaoTest {
-   public static void main (String[] args) throws SQLException, ClassNotFoundException {
+    @Test // Let JUnit know this method is a test
+   public void addAndGet () throws SQLException, ClassNotFoundException {
 
        ApplicationContext context = new GenericXmlApplicationContext("applicationContext.xml");
        UserDao dao = context.getBean("userDao", UserDao.class);
 
        dao.deleteAll();
        System.out.println("Table 초기화 완료!");
-       User user = new User(); user.setId("ordinaryD"); user.setName("J"); user.setPassword("password");
+       User user = new User();
+       user.setId("ordinaryD");
+       user.setName("J");
+       user.setPassword("password");
        dao.add(user);
        System.out.println(user.getId() + " 등록 성공");
        User user2 = dao.get(user.getId()); System.out.println(user2.getName()); System.out.println(user2.getPassword());
