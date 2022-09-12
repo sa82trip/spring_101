@@ -15,7 +15,7 @@ public class DaoFactory {
 
     @Bean
     public ConnectionMaker getConnectionMaker() {
-        return new DConnectionMaker();
+        return new ConnectionMakerWithStdOut();
     }
 
 }
