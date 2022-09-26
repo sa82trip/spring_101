@@ -51,8 +51,13 @@ public class UserDaoTest {
         assertThat(dao.getCount(), is(3));
     }
 
-    @Test
-    public void get() {
+    @Test(expected = SQLException.class)
+    public void getUserFailure() throws SQLException, ClassNotFoundException {
+        ApplicationContext context = new GenericXmlApplicationContext("applicationContext.xml");
+        UserDao dao = context.getBean("userDao", UserDao.class);
+        dao.deleteAll();
+        assertThat(dao.getCount(), is(0));
+        dao.get("DoesnotExistId");
     }
 
     @Test
