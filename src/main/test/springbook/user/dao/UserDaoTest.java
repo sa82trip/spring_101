@@ -1,8 +1,8 @@
 package springbook.user.dao;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.dao.EmptyResultDataAccessException;
 import springbook.user.domain.User;
@@ -14,11 +14,20 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 
 public class UserDaoTest {
+    private UserDao dao;
+    private User user1;
+    private User user2;
+    private User user3;
+    @Before
+    public void setup(){
+        ApplicationContext context = new GenericXmlApplicationContext("applicationContext.xml");
+         this.dao = context.getBean("userDao", UserDao.class);
+        this.user1 = new User("joon", "ordinary", "opass");
+        this.user2 = new User("M","maike","mpass");
+        this.user3 = new User("J","jon","jpass");
+    }
     @Test // Let JUnit know this method is a test
    public void addAndGet () throws SQLException, ClassNotFoundException {
-
-        ApplicationContext context = new GenericXmlApplicationContext("applicationContext.xml");
-        UserDao dao = context.getBean("userDao", UserDao.class);
 
         dao.deleteAll();
         assertThat(dao.getCount(), is(0));
@@ -37,8 +46,6 @@ public class UserDaoTest {
 
     @Test
     public void count() throws SQLException, ClassNotFoundException {
-        ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
-        UserDao dao = context.getBean("userDao", UserDao.class);
         User user1 = new User("guiyom", "park", "pass111");
         User user2 = new User("Mac", "lee", "pass222");
         User user3 = new User("Guic", "Cho", "pass333");
@@ -54,8 +61,6 @@ public class UserDaoTest {
 
     @Test(expected = EmptyResultDataAccessException.class)
     public void getUserFailure() throws SQLException, ClassNotFoundException {
-        ApplicationContext context = new GenericXmlApplicationContext("applicationContext.xml");
-        UserDao dao = context.getBean("userDao", UserDao.class);
         dao.deleteAll();
         assertThat(dao.getCount(), is(0));
         dao.get("DoesnotExistId");
